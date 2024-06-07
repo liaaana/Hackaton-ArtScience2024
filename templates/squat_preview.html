@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Техника приседаний</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto p-6">
+     
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <video muted autoplay loop class="w-full h-auto">
+                    <source src="../static/images/squats/female-bodyweight-squat-front.mp4" type="video/mp4">
+                </video>
+            </div>
+        
+
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <video muted autoplay loop class="w-full h-auto">
+                    <source src="../static/images/squats/female-bodyweight-squat-side.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        
+        
+
+        <div class="mt-8">
+            <a href="https://musclewiki.com/"><h2 class="text-2xl font-semibold mb-4">Техника выполнения приседаний:</h2></a>
+            <ol class="list-decimal pl-6">
+                <li class="mb-2">Разместите ваши ноги на ширине плеч.</li>
+                <li class="mb-2">Согните колени и бедра, садясь назад в приседание, опуская ваше тело.</li>
+                <li class="mb-2">Продолжайте движение вниз, пока ваши бедра не будут параллельны полу.</li>
+                <li class="mb-2">Вернитесь в исходное положение, выпрямляя ноги и бедра.</li>
+            </ol>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-lg font-semibold">Расположите устройство так, чтобы вас можно было видеть в полный рост. Приложение будет отслеживать количество повторений и проверять технику выполнения.</p>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-lg font-semibold">Рекомендуем выполнить 20 повторений</p>
+            <a href="{{url_for('squat')}}" class="bg-purple-600 text-white px-4 py-2 rounded-lg mt-4 inline-block">Приступить</a>
+        </div>
+    </div>
+{% endblock %}

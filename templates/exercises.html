@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}<title>Упражнения</title>{% endblock %}
+{% block content %}
+<div class="container mx-auto py-8 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="{{url_for('push_up_preview')}}">
+        <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/push_up.png');">
+            <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                <h2 class="text-white text-lg md:text-xl font-semibold text-center">Отжимания</h2>
+            </div>
+        </div></a>
+        
+        <a href="{{url_for('squat_preview')}}">
+        <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/squat.png');">
+            <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                <h2 class="text-white text-lg md:text-xl font-semibold text-center">Приседания</h2>
+            </div>
+        </div></a>
+
+        <a href="{{url_for('curl_preview')}}">
+        <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/curl.png');">
+            <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                <h2 class="text-white text-lg md:text-xl font-semibold text-center">Сгибание рук с гантелями</h2>
+            </div>
+        </div></a>
+    </div>
+</div>
+{% endblock %}
+

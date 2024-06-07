@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}{% endblock %}
+    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
+    <link href="../static/css/main.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-white shadow-md">
+    <div class="container mx-auto py-4 px-6 md:flex md:justify-between md:items-center">
+        <div class="flex items-center justify-between">
+            <div class="text-lg font-semibold text-gray-800 ml-2">
+                <a href="/">ФитнесТРЕКЕР</a>
+            </div>
+            <div class="md:hidden mt-2"> 
+                <button 
+                    id="mobile-menu-button"
+                    class="text-black">
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
+                        <path fill-rule="evenodd" d="M3 9a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0-4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div 
+            id="mobile-menu"
+            class="hidden md:flex md:flex-row flex-col space-x-0 md:space-x-4 md:mt-0 mt-4">
+            {% if current_user.is_authenticated %}
+            <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Рейтинг</a>
+            <a href="{{url_for('exercisesPage')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Упражнения</a>
+            <a href="{{url_for('profile')}}" class="text-gray-600  py-2 px-4  md:mt-0 mt-2 block md:inline">Профиль</a>
+            <a href="{{url_for('logout')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Выйти</a>
+            {% else %}
+            <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Рейтинг</a>
+            <a href="{{url_for('login')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Вход</a>
+            <a href="{{url_for('register')}}" class="bg-purple-700 text-white py-2 px-4 rounded md:mt-0 mt-2 block md:inline">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+{% block content %}{% endblock %}
+
+
+<script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>
