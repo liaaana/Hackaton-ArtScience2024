@@ -1,29 +1,122 @@
+<!-- Extend from a base template called "base.html" -->
 {% extends "base.html" %}
-{% block title %}<title>Упражнения</title>{% endblock %}
-{% block content %}
-<div class="container mx-auto py-8 px-4">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="{{url_for('push_up_preview')}}">
-        <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/push_up.png');">
-            <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
-                <h2 class="text-white text-lg md:text-xl font-semibold text-center">Отжимания</h2>
-            </div>
-        </div></a>
-        
-        <a href="{{url_for('squat_preview')}}">
-        <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/squat.png');">
-            <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
-                <h2 class="text-white text-lg md:text-xl font-semibold text-center">Приседания</h2>
-            </div>
-        </div></a>
 
-        <a href="{{url_for('curl_preview')}}">
-        <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/curl.png');">
-            <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
-                <h2 class="text-white text-lg md:text-xl font-semibold text-center">Сгибание рук с гантелями</h2>
+<!-- Block to set the title of the page, which will be used in the <title> tag of the HTML head section -->
+{% block title %}<title>Exercises</title>{% endblock %}
+
+<!-- Block to define the main content of the page -->
+{% block content %}
+<!-- Container for the exercises content, with padding and margin styling -->
+<div class="container mx-auto py-8 px-4">
+    <!-- Grid layout to display exercise options, with responsiveness for different screen sizes -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Link to the push-up preview page -->
+        <a href="{{ url_for('push_up_preview') }}">
+            <!-- Container for the push-up exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/push_up.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Push-up exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Push-ups</h2>
+                </div>
             </div>
-        </div></a>
+        </a>
+
+        <!-- Link to the squat preview page -->
+        <a href="{{ url_for('squat_preview') }}">
+            <!-- Container for the squat exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/squat.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Squat exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Squats</h2>
+                </div>
+            </div>
+        </a>
+
+        <!-- Link to the bicep curl preview page -->
+        <a href="{{ url_for('curl_preview') }}">
+            <!-- Container for the bicep curl exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/curl.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Bicep curl exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Bicep Curls</h2>
+                </div>
+            </div>
+        </a>
+
+          <!-- Link to the crunch preview page -->
+        <a href="{{ url_for('crunch_preview') }}">
+            <!-- Container for the crunch exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/crunch.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Crunch exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Crunches</h2>
+                </div>
+            </div>
+        </a>
+
+        <!-- Link to the lunge preview page -->
+        <a href="{{ url_for('lunge_preview') }}">
+            <!-- Container for the lunge exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/lunge.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Lunge exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Lunges</h2>
+                </div>
+            </div>
+        </a>
+
+        <!-- Link to the V-up crunch preview page -->
+        <a href="{{ url_for('v_up_crunch_preview') }}">
+            <!-- Container for the V-up crunch exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/v_up_crunch.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- V-up crunch exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">V-up Crunches</h2>
+                </div>
+            </div>
+        </a>
+
+        <!-- Link to the lateral raise preview page -->
+        <a href="{{ url_for('lateral_raise_preview') }}">
+            <!-- Container for the lateral raise exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/lateral_raise.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Lateral raise exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Lateral Raises</h2>
+                </div>
+            </div>
+        </a>
+
+        <!-- Link to the forward bends preview page -->
+        <a href="{{ url_for('forward_bend_preview') }}">
+            <!-- Container for the forward bends exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/forward_bend.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Forward bends exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Forward Bend</h2>
+                </div>
+            </div>
+        </a>
+
+        <!-- Link to the plank preview page -->
+        <a href="{{ url_for('plank_preview') }}">
+            <!-- Container for the plank exercise option with background image and styling -->
+            <div class="bg-cover bg-center h-64 md:h-80 rounded-lg shadow-md" style="background-image: url('../static/images/exercises_preview/plank.png');">
+                <!-- Overlay with black background and opacity, centering the exercise name -->
+                <div class="bg-black bg-opacity-50 h-full flex items-center justify-center rounded-lg">
+                    <!-- Plank exercise name with text styling -->
+                    <h2 class="text-white text-lg md:text-xl font-semibold text-center">Plank</h2>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 {% endblock %}
-

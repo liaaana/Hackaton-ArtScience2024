@@ -21,6 +21,7 @@ from forms.register_form import RegistrationForm
 from app import app, db, login_manager, socketio
 from models.user import User
 
+
 def base64_to_image(base64_string):
     # Extract the base64 encoded binary data from the input string
     base64_data = base64_string.split(",")[1]
@@ -65,53 +66,38 @@ def rating():
 
 
 @app.route("/exercises")
-def exercisesPage():
+def exercises():
     return render_template("exercises.html")
 
 
-@app.route("/curl_preview")
-@login_required
-def curl_preview():
-    """Video streaming squat page."""
-    return render_template("curl_preview.html")
+@app.route("/test")
+def test():
+    return render_template("test.html")
 
 
 @app.route("/curl")
 @login_required
 def curl():
-    """Video streaming squat page."""
     return render_template("curl.html")
-
-
-@app.route("/push_up_preview")
-@login_required
-def push_up_preview():
-    return render_template("push_up_preview.html")
 
 
 @app.route("/push_up")
 @login_required
 def push_up():
-    """Video streaming squat page."""
     return render_template("push_up.html")
-
-
-@app.route("/squat_preview")
-@login_required
-def squat_preview():
-    return render_template("squat_preview.html")
 
 
 @app.route("/squat")
 @login_required
 def squat():
-    """Video streaming squat page."""
     return render_template("squat.html")
 
 
 currentExercise = ""
 
 exercises = Exercises()
+
+
 @socketio.on("exercise")
 def receive_exersice(exercise):
     exercises.counter = 0
@@ -122,7 +108,6 @@ def receive_exersice(exercise):
 
 @socketio.on("image")
 def receive_image(image):
-
     image = base64_to_image(image)
     img = None
     if (currentExercise == "squat"):
@@ -142,7 +127,6 @@ def receive_image(image):
     emit("processed_image", processed_img_data)
 
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
@@ -158,8 +142,6 @@ def register():
         return redirect(url_for("login"))
 
     return render_template("register.html", form=form)
-
-
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -193,14 +175,67 @@ def change_username():
     return redirect("/profile")
 
 
-@app.route("/change_language", methods=["POST"])
+# Define a route for the push-up preview page
+@app.route('/push_up_preview')
 @login_required
-def change_language():
-    new_language = request.form.get("new_language")
-    if new_language:
-        current_user.language = new_language
-        db.session.commit()
-    return redirect("/profile")
+def push_up_preview():
+    return render_template('push_up_preview.html')
+
+
+# Define a route for the crunch preview page
+@app.route('/crunch_preview')
+@login_required
+def crunch_preview():
+    return render_template('crunch_preview.html')
+
+
+# Define a route for the squat preview page
+@app.route('/squat_preview')
+@login_required
+def squat_preview():
+    return render_template('squat_preview.html')
+
+
+# Define a route for the bicep curl preview page
+@app.route('/curl_preview')
+@login_required
+def curl_preview():
+    return render_template('curl_preview.html')
+
+
+# Define a route for the lunge preview page
+@app.route('/lunge_preview')
+@login_required
+def lunge_preview():
+    return render_template('lunge_preview.html')
+
+
+# Define a route for the V-up crunch preview page
+@app.route('/v_up_crunch_preview')
+@login_required
+def v_up_crunch_preview():
+    return render_template('v_up_crunch_preview.html')
+
+
+# Define a route for the lateral raise preview page
+@app.route('/lateral_raise_preview')
+@login_required
+def lateral_raise_preview():
+    return render_template('lateral_raise_preview.html')
+
+
+# Define a route for the forward bends preview page
+@app.route('/forward_bend_preview')
+@login_required
+def forward_bend_preview():
+    return render_template('forward_bend_preview.html')
+
+
+# Define a route for the plank preview page
+@app.route('/plank_preview')
+@login_required
+def plank_preview():
+    return render_template('plank_preview.html')
 
 
 @app.route("/logout")
@@ -208,4 +243,3 @@ def change_language():
 def logout():
     logout_user()
     return redirect(url_for("index"))
-

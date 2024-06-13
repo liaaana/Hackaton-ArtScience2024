@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Squat Technique</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <video muted autoplay loop class="w-full h-auto">
+                    <source src="../static/images/squats/female-bodyweight-squat-front.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <video muted autoplay loop class="w-full h-auto">
+                    <source src="../static/images/squats/female-bodyweight-squat-side.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <div class="mt-8">
+            <a href="https://musclewiki.com/"><h2 class="text-2xl font-semibold mb-4">Squat Technique:</h2></a>
+            <ol class="list-decimal pl-6">
+                <li class="mb-2">Place your feet shoulder-width apart.</li>
+                <li class="mb-2">Bend your knees and hips, sitting back into a squat, lowering your body.</li>
+                <li class="mb-2">Continue downward until your thighs are parallel to the floor.</li>
+                <li class="mb-2">Return to the starting position, straightening your legs and hips.</li>
+            </ol>
+        </div>
+        <div class="mt-8">
+            <p class="text-lg font-semibold">Position the device so that you can be seen in full height. The app will track repetitions and check execution technique.</p>
+        </div>
+        <div class="mt-8 text-center">
+            <p class="text-lg font-semibold">Recommended to perform 20 repetitions</p>
+            <a href="{{url_for('squat')}}" class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4 inline-block">Start</a>
+        </div>
+    </div>
+{% endblock %}

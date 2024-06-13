@@ -34,11 +34,11 @@
             <a href="{{url_for('exercises')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Exercises</a>
             <a href="{{url_for('test')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Test</a>
             <a href="{{url_for('profile')}}" class="text-gray-600  py-2 px-4  md:mt-0 mt-2 block md:inline">Profile</a>
-            <a href="{{url_for('logout')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Logout</a>
+            <a href="{{url_for('logout')}}" class="text-blue-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Logout</a>
             {% else %}
             <!-- Links shown when the user is not authenticated -->
             <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Rating</a>
-            <a href="{{url_for('login')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Login</a>
+            <a href="{{url_for('login')}}" class="text-blue-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Login</a>
             <a href="{{url_for('register')}}" class="bg-blue-700 text-white py-2 px-4 rounded md:mt-0 mt-2 block md:inline">Register</a>
             {% endif %}
         </div>

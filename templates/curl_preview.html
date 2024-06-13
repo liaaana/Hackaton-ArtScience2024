@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Bicep Curl Technique</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <video muted autoplay loop class="w-full h-auto">
+                    <source src="../static/images/curls/male-dumbbell-curl-front.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <video muted autoplay loop class="w-full h-auto">
+                    <source src="../static/images/curls/male-dumbbell-curl-side.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <div class="mt-8">
+            <a href="https://musclewiki.com/"><h2 class="text-2xl font-semibold mb-4">Bicep Curl Technique:</h2></a>
+                <li class="mb-2">Stand straight with dumbbells in each hand, arms extended at shoulder level.</li>
+                <li class="mb-2">Raise one dumbbell, rotate your forearm, so it's vertical, palm facing your shoulder.</li>
+                <li class="mb-2">Lower to starting position and repeat with the other arm.</li>
+            </ul>
+        </div>
+        <div class="mt-8">
+            <p class="text-lg font-semibold">Position the device so that you can be seen in full height. The app will track repetitions and check execution technique.</p>
+        </div>
+        <div class="mt-8 text-center">
+            <p class="text-lg font-semibold">Recommended to perform 10 repetitions per arm</p>
+            <a href="{{url_for('curl')}}" class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4 inline-block">Start</a>
+        </div>
+    </div>
+{% endblock %}

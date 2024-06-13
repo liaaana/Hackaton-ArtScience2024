@@ -1,0 +1,116 @@
+<!-- Extend from a base template called "base.html" -->
+{% extends "base.html" %}
+
+<!-- Block to set the title of the page, which will be used in the <title> tag of the HTML head section -->
+{% block title %}<title>Rating</title>{% endblock %}
+
+<!-- Block to define the main content of the page -->
+{% block content %}
+<!-- Container for the rating content, with styling for white background, rounded corners, shadow, padding, and margins -->
+<div class="bg-white rounded-lg shadow-md p-6 mx-auto mt-8 sm:ml-8 sm:mr-8">
+    <!-- Navigation buttons for switching between exercise rankings -->
+    <div class="flex justify-between mb-4">
+        <button id="prev-button" class="bg-blue-600 text-white px-4 py-2 rounded">Previous</button>
+        <span id="exercise-title" class="text-lg font-semibold">Push-ups</span>
+        <button id="next-button" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+    </div>
+    <!-- Container for the exercise rankings -->
+    <div id="rankings-container">
+        <!-- List of users participating in the contest -->
+        <ul id="push-ups-ranking" class="exercise-ranking">
+            <!-- Loop through each user in the 'users' variable -->
+            {% for user in users %}
+            <!-- List item for each user, with styling for background color, padding, margins, and flex layout -->
+            <li class="bg-gray-200 rounded-lg p-4 mb-4 flex flex-col">
+                <!-- Username and rank container, with flex layout for alignment -->
+                <div class="flex items-center justify-between mb-2">
+                    <!-- Display the user's name -->
+                    <span class="text-lg font-semibold">{{ user.name }}</span>
+                    <!-- Container for the user's rank -->
+                    <div class="flex items-center">
+                        <!-- Display the user's rank, with different styling for the first place -->
+                        <span
+                            class="text-sm font-semibold {{ 'text-white bg-blue-600' if loop.first else 'text-gray-700 bg-gray-400' }} rounded-full w-8 h-8 flex items-center justify-center">
+                            {{ loop.index }}
+                        </span>
+                    </div>
+                </div>
+                <!-- Display the user's push-up count -->
+                <div class="flex flex-col">
+                    <div class="mb-2">
+                        <span class="text-sm font-semibold">Push-ups:</span>
+                        <span class="text-sm">{{ user.exercise1_counter }}</span>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <ul id="crunches-ranking" class="exercise-ranking hidden">
+            <!-- Loop through each user in the 'users' variable -->
+            {% for user in users %}
+            <!-- List item for each user, with styling for background color, padding, margins, and flex layout -->
+            <li class="bg-gray-200 rounded-lg p-4 mb-4 flex flex-col">
+                <!-- Username and rank container, with flex layout for alignment -->
+                <div class="flex items-center justify-between mb-2">
+                    <!-- Display the user's name -->
+                    <span class="text-lg font-semibold">{{ user.name }}</span>
+                    <!-- Container for the user's rank -->
+                    <div class="flex items-center">
+                        <!-- Display the user's rank, with different styling for the first place -->
+                        <span
+                            class="text-sm font-semibold {{ 'text-white bg-blue-600' if loop.first else 'text-gray-700 bg-gray-400' }} rounded-full w-8 h-8 flex items-center justify-center">
+                            {{ loop.index }}
+                        </span>
+                    </div>
+                </div>
+                <!-- Display the user's crunches count -->
+                <div class="flex flex-col">
+                    <div class="mb-2">
+                        <span class="text-sm font-semibold">Crunches:</span>
+                        <span class="text-sm">{{ user.exercise2_counter }}</span>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    // JavaScript to handle switching between exercise rankings
+    const pushUpsRanking = document.getElementById('push-ups-ranking');
+    const crunchesRanking = document.getElementById('crunches-ranking');
+    const exerciseTitle = document.getElementById('exercise-title');
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+
+    // Initial state
+    let currentExerciseIndex = 0;
+    const exercises = [
+        { title: 'Push-ups', element: pushUpsRanking },
+        { title: 'Crunches', element: crunchesRanking }
+    ];
+
+    function updateExerciseDisplay() {
+        // Hide all exercise rankings
+        exercises.forEach(exercise => exercise.element.classList.add('hidden'));
+        // Show the current exercise ranking
+        exercises[currentExerciseIndex].element.classList.remove('hidden');
+        // Update the title
+        exerciseTitle.textContent = exercises[currentExerciseIndex].title;
+    }
+
+    prevButton.addEventListener('click', () => {
+        currentExerciseIndex = (currentExerciseIndex - 1 + exercises.length) % exercises.length;
+        updateExerciseDisplay();
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentExerciseIndex = (currentExerciseIndex + 1) % exercises.length;
+        updateExerciseDisplay();
+    });
+
+    // Initial display
+    updateExerciseDisplay();
+</script>
+{% endblock %}
