@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}{% endblock %}
-    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
-    <link href="../static/css/main.css" rel="stylesheet">
+    <meta charset="UTF-8"> <!-- Sets the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures proper rendering and touch zooming on mobile devices -->
+    {% block title %}{% endblock %} <!-- Placeholder for page title block to be defined in child templates -->
+    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon"> <!-- Link to the favicon -->
+    <link href="../static/css/main.css" rel="stylesheet"> <!-- Link to the CSS file -->
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100"> <!-- Sets the background color of the body -->
 
-<header class="bg-white shadow-md">
-    <div class="container mx-auto py-4 px-6 md:flex md:justify-between md:items-center">
-        <div class="flex items-center justify-between">
-            <div class="text-lg font-semibold text-gray-800 ml-2">
-                <a href="/">ФитнесТРЕКЕР</a>
+<header class="bg-white shadow-md"> <!-- Defines the header section with a background color and shadow -->
+    <div class="container mx-auto py-4 px-6 md:flex md:justify-between md:items-center"> <!-- Container for header content, with responsive styling -->
+        <div class="flex items-center justify-between"> <!-- Flex container for logo and mobile menu button -->
+            <div class="text-lg font-semibold text-gray-800 ml-2"> <!-- App name -->
+                <a href="/">GymGuru</a> <!-- Link to homepage -->
             </div>
-            <div class="md:hidden mt-2"> 
-                <button 
+            <div class="md:hidden mt-2"> <!-- Mobile menu button, hidden on medium and larger screens -->
+                <button
                     id="mobile-menu-button"
-                    class="text-black">
-                    <svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
-                        <path fill-rule="evenodd" d="M3 9a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0-4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    class="text-black"> <!-- Button for toggling the mobile menu -->
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6"> <!-- SVG icon for the mobile menu button -->
+                        <path fill-rule="evenodd" d="M3 9a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0-4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /> <!-- Icon path data -->
                     </svg>
                 </button>
             </div>
         </div>
-        <div 
+        <div
             id="mobile-menu"
-            class="hidden md:flex md:flex-row flex-col space-x-0 md:space-x-4 md:mt-0 mt-4">
+            class="hidden md:flex md:flex-row flex-col space-x-0 md:space-x-4 md:mt-0 mt-4"> <!-- Menu container, for mobile hidden by default -->
             {% if current_user.is_authenticated %}
-            <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Рейтинг</a>
-            <a href="{{url_for('exercisesPage')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Упражнения</a>
-            <a href="{{url_for('profile')}}" class="text-gray-600  py-2 px-4  md:mt-0 mt-2 block md:inline">Профиль</a>
-            <a href="{{url_for('logout')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Выйти</a>
+            <!-- Links shown when the user is authenticated -->
+            <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Rating</a>
+            <a href="{{url_for('exercises')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Exercises</a>
+            <a href="{{url_for('test')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Test</a>
+            <a href="{{url_for('profile')}}" class="text-gray-600  py-2 px-4  md:mt-0 mt-2 block md:inline">Profile</a>
+            <a href="{{url_for('logout')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Logout</a>
             {% else %}
-            <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Рейтинг</a>
-            <a href="{{url_for('login')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Вход</a>
-            <a href="{{url_for('register')}}" class="bg-purple-700 text-white py-2 px-4 rounded md:mt-0 mt-2 block md:inline">Регистрация</a>
+            <!-- Links shown when the user is not authenticated -->
+            <a href="{{url_for('rating')}}" class="text-gray-600 py-2 px-4  md:mt-0 mt-2 block md:inline">Rating</a>
+            <a href="{{url_for('login')}}" class="text-purple-700 py-2 px-4  md:mt-0 mt-2 block md:inline">Login</a>
+            <a href="{{url_for('register')}}" class="bg-blue-700 text-white py-2 px-4 rounded md:mt-0 mt-2 block md:inline">Register</a>
             {% endif %}
         </div>
     </div>
 </header>
 
+<!-- Placeholder for main content block to be defined in child templates2 -->
 {% block content %}{% endblock %}
 
-
 <script>
+    // JavaScript to toggle the visibility of the mobile menu
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
 
