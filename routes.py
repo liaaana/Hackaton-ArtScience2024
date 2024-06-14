@@ -62,7 +62,7 @@ def similarity():
         if image_file and allowed_file(image_file.filename):
             image_file_path = os.path.join(app.config['UPLOAD_FOLDER'], f'{random_name}.jpg')
             image_file.save(image_file_path)
-            info, link_more, new_path = get_similarity(image_file_path)
+            success, info, link_more, new_path = get_similarity(image_file_path)
             return redirect(url_for('result_similarity',
                                     image_file_path=os.path.join('uploads', f'{random_name}.jpg'),
                                     info=info, link_more=link_more, new_path=new_path))

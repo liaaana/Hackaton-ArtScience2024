@@ -11,12 +11,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 
 
-# /Users/lianamardanova/Downloads/chromedriver-mac-arm64/chromedriver
-service = Service(executable_path='/Users/lianamardanova/Downloads/chromedriver-mac-arm64/chromedriver')
-# service = Service(executable_path='chromedriver-win64\chromedriver-win64\chromedriver.exe')
-options = webdriver.ChromeOptions()
-driver = webdriver.Chrome(service=service, options=options)
-
 
 def url_search(file_path):
     search_url = 'https://yandex.ru/images/search'
@@ -30,7 +24,7 @@ def url_search(file_path):
     return img_search_url
 
 
-def get_names(file_path):
+def get_names(file_path, driver):
     img_search_url = url_search(file_path)
     driver.get(img_search_url)
 
@@ -51,7 +45,7 @@ def get_names(file_path):
     return data_state[:3]
 
 
-def get_wiki_link(painting_name):
+def get_wiki_link(painting_name, driver):
     google_url = "https://www.google.com"
 
     # Open Google
@@ -84,7 +78,7 @@ def get_wiki_link(painting_name):
     return links
 
 
-def get_wiki_title(link):
+def get_wiki_title(link, driver):
     driver.get(link)
 
     page_source = driver.page_source
@@ -121,6 +115,11 @@ import os
 from torchvision.models import mobilenet_v3_large, MobileNet_V3_Large_Weights
 
 def get_similarity(img_path):
+    # service = Service(executable_path='/home/arix/Desktop/arthack/chromedriver-linux64/chromedriver')
+    service = Service(executable_path='/Users/lianamardanova/Downloads/chromedriver-mac-arm64/chromedriver')
+    options = webdriver.ChromeOptions()
+    driver = webdriver.Chrome(service=service, options=options)
+
     model = mobilenet_v3_large(weights=MobileNet_V3_Large_Weights.IMAGENET1K_V2)
 
     model.eval()
@@ -150,11 +149,11 @@ def get_similarity(img_path):
 
     emb1 = get_emb(img_path)
 
-    names = get_names(img_path)
-    link = get_wiki_link(sorted(names, key=lambda x: len(x))[-1])
-    title, extention = get_wiki_title(link)
+    names = get_names(img_path, driver)
+    link = get_wiki_link(sorted(names, key=lambda x: len(x))[-1], driver)
+    title, extention = get_wiki_title(link, driver)
 
-    second_path = os.path.join('saved_images', f'{title}.{extention}')
+    second_path = os.path.join('static/saved_images', f'{title}.{extention}')
 
     emb2 = get_emb(second_path)
 
@@ -166,13 +165,22 @@ def get_similarity(img_path):
     if sim < 20:
         return False, 0, title.replace('_', ' '), second_path
 
+    driver.quit()
+
     return True, sim, title.replace('_', ' '), second_path
 
 def get_full_info(file_path, num_sentences=4):
-    names = get_names(file_path)
-    link = get_wiki_link(sorted(names, key=lambda x: len(x))[-1])
 
-    title, extension = get_wiki_title(link)
+    service = Service(executable_path='/Users/lianamardanova/Downloads/chromedriver-mac-arm64/chromedriver')
+    # service = Service(executable_path='/home/arix/Desktop/arthack/chromedriver-linux64/chromedriver')
+    options = webdriver.ChromeOptions()
+    driver = webdriver.Chrome(service=service, options=options)
+
+
+    names = get_names(file_path, driver)
+    link = get_wiki_link(sorted(names, key=lambda x: len(x))[-1], driver)
+
+    title, extension = get_wiki_title(link, driver)
 
     title = title.replace('_', ' ')
 
@@ -183,5 +191,8 @@ def get_full_info(file_path, num_sentences=4):
 
     if len(info) > 500:
         return info[:500] + "...", link, os.path.join('saved_images', f'{title}.{extension}')
+    
+    driver.quit()
+
     return info, link, os.path.join('saved_images', f'{title}.{extension}')
 
