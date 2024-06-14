@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title></title>
+{% endblock %}
+
+{% block content %}
+<section class="flex flex-col md:flex-row">
+    <div class="md:w-1/2 bg-gray-200 flex flex-col items-center justify-center pb-24 pt-24">
+        <img src="{{ url_for('static', filename=image_file_path) }}" alt="painting" class="w-1/2 mx-auto mb-4 shadow-2xl">
+    </div>
+    <div class="md:w-1/2 p-20">
+        <a href="{{ url_for('similarity') }}" class="text-sm">&lt; Back</a>
+        <h2 class="text-3xl font-bold mt-16 mb-6"></h2>
+        <p class="text-sm text-gray-500 mb-4">
+            Автор: <br>
+            Название: <br>
+            Стиль:
+        </p>
+        <hr class="my-4">
+    </div>
+</section>
+{% endblock %}
