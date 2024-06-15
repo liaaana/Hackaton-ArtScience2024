@@ -13,6 +13,8 @@
 ## Запуск
 Чтобы запустить приложение, выполните следующие шаги:
 
+0. Скачайте ChromeDriver для своей версии Google Chrome 
+
 1. Клонируйте репозиторий:
     ```
     git clone https://github.com/liaaana/ArtScience.git
