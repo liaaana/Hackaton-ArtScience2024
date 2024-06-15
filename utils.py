@@ -104,7 +104,7 @@ def get_wiki_title(link, driver):
 
     title = soup.find(id='firstHeading')
     extension = "png"
-    infobox = soup.find(class_='infobox')  # Locate the infobox container
+    infobox = soup.find(class_='infobox')
     if infobox:
         image = infobox.find('img')
         if image:
@@ -112,7 +112,6 @@ def get_wiki_title(link, driver):
             if image_url[:2] == '//':
                 image_url = 'https:' + image_url
 
-            # Download the image (optional)
             image_response = requests.get(image_url)
             extension = image_url.split('.')[-1]
             print(extension)
@@ -219,24 +218,11 @@ def load_image(image_path, image_size=(256, 256), preserve_aspect_ratio=True):
     """Loads and preprocesses images."""
     img = tf.io.decode_image(
         tf.io.read_file(image_path),
-        channels=3, dtype=tf.float32)[tf.newaxis, ...]
+        channels=3, dtype=tf.float32
+    )[tf.newaxis, ...]
     img = crop_center(img)
-    img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
+    img = tf.image.resize(img, image_size, preserve_aspect_ratio=preserve_aspect_ratio)
     return img
-
-
-def show_n(images, titles=('',)):
-    n = len(images)
-    image_sizes = [image.shape[1] for image in images]
-    w = (image_sizes[0] * 6) // 320
-    plt.figure(figsize=(w * n, w))
-    gs = gridspec.GridSpec(1, n, width_ratios=image_sizes)
-    for i in range(n):
-        plt.subplot(gs[i])
-        plt.imshow(images[i][0], aspect='equal')
-        plt.axis('off')
-        plt.title(titles[i] if len(titles) > i else '')
-    plt.show()
 
 
 def style_transfer(content_image_path, style_image_path, save_path):
