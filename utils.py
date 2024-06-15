@@ -10,6 +10,24 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 
+import torchvision
+import torch
+from PIL import Image
+from numpy import dot
+from numpy.linalg import norm
+import os
+from torchvision.models import mobilenet_v3_large, MobileNet_V3_Large_Weights
+
+import os
+import gc
+
+import functools
+from matplotlib import gridspec
+import matplotlib.pylab as plt
+import numpy as np
+import tensorflow as tf
+import matplotlib.image
+import tensorflow_hub as hub
 
 
 def url_search(file_path):
@@ -85,7 +103,7 @@ def get_wiki_title(link, driver):
     soup = BeautifulSoup(page_source, 'html.parser')
 
     title = soup.find(id='firstHeading')
-
+    extension = "png"
     infobox = soup.find(class_='infobox')  # Locate the infobox container
     if infobox:
         image = infobox.find('img')
@@ -102,17 +120,8 @@ def get_wiki_title(link, driver):
             print(title)
             with open(f'static/saved_images/{title}.{extension}', 'wb') as f:
                 f.write(image_response.content)
-
     return title, extension
 
-
-import torchvision
-import torch
-from PIL import Image
-from numpy import dot
-from numpy.linalg import norm
-import os
-from torchvision.models import mobilenet_v3_large, MobileNet_V3_Large_Weights
 
 def get_similarity(img_path):
     # service = Service(executable_path='/home/arix/Desktop/arthack/chromedriver-linux64/chromedriver')
@@ -151,9 +160,9 @@ def get_similarity(img_path):
 
     names = get_names(img_path, driver)
     link = get_wiki_link(sorted(names, key=lambda x: len(x))[-1], driver)
-    title, extention = get_wiki_title(link, driver)
+    title, extension = get_wiki_title(link, driver)
 
-    second_path = os.path.join('static/saved_images', f'{title}.{extention}')
+    second_path = os.path.join('static/saved_images', f'{title}.{extension}')
 
     emb2 = get_emb(second_path)
 
@@ -169,13 +178,12 @@ def get_similarity(img_path):
 
     return True, sim, title.replace('_', ' '), second_path
 
-def get_full_info(file_path, num_sentences=4):
 
+def get_full_info(file_path, num_sentences=4):
     service = Service(executable_path='/Users/lianamardanova/Downloads/chromedriver-mac-arm64/chromedriver')
     # service = Service(executable_path='/home/arix/Desktop/arthack/chromedriver-linux64/chromedriver')
     options = webdriver.ChromeOptions()
     driver = webdriver.Chrome(service=service, options=options)
-
 
     names = get_names(file_path, driver)
     link = get_wiki_link(sorted(names, key=lambda x: len(x))[-1], driver)
@@ -191,8 +199,65 @@ def get_full_info(file_path, num_sentences=4):
 
     if len(info) > 500:
         return info[:500] + "...", link, os.path.join('saved_images', f'{title}.{extension}')
-    
-    driver.quit()
 
+    driver.quit()
+    print(link)
     return info, link, os.path.join('saved_images', f'{title}.{extension}')
 
+
+def crop_center(image):
+    """Returns a cropped square image."""
+    shape = image.shape
+    new_shape = min(shape[1], shape[2])
+    offset_y = max(shape[1] - shape[2], 0) // 2
+    offset_x = max(shape[2] - shape[1], 0) // 2
+    image = tf.image.crop_to_bounding_box(image, offset_y, offset_x, new_shape, new_shape)
+    return image
+
+
+def load_image(image_path, image_size=(256, 256), preserve_aspect_ratio=True):
+    """Loads and preprocesses images."""
+    img = tf.io.decode_image(
+        tf.io.read_file(image_path),
+        channels=3, dtype=tf.float32)[tf.newaxis, ...]
+    img = crop_center(img)
+    img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
+    return img
+
+
+def show_n(images, titles=('',)):
+    n = len(images)
+    image_sizes = [image.shape[1] for image in images]
+    w = (image_sizes[0] * 6) // 320
+    plt.figure(figsize=(w * n, w))
+    gs = gridspec.GridSpec(1, n, width_ratios=image_sizes)
+    for i in range(n):
+        plt.subplot(gs[i])
+        plt.imshow(images[i][0], aspect='equal')
+        plt.axis('off')
+        plt.title(titles[i] if len(titles) > i else '')
+    plt.show()
+
+
+def style_transfer(content_image_path, style_image_path, save_path):
+    hub_handle = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
+    hub_module = hub.load(hub_handle)
+
+    output_image_size = 1024
+    content_img_size = (output_image_size, output_image_size)
+
+    style_img_size = (256, 256)
+    content_image = load_image(content_image_path, content_img_size)
+    style_image = load_image(style_image_path, style_img_size)
+    style_image = tf.nn.avg_pool(style_image, ksize=[3, 3], strides=[1, 1], padding='SAME')
+
+    outputs = hub_module(tf.constant(content_image), tf.constant(style_image))
+    stylized_image = outputs[0]
+    tf.executing_eagerly()
+
+    file_name = save_path
+    matplotlib.image.imsave(file_name, stylized_image.numpy()[0])
+
+    del hub_module
+    gc.collect()
+    return save_path
